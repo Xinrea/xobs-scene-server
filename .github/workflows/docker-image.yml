@@ -18,6 +18,5 @@ jobs:
     - name: Build the Docker image
       run: |
         echo "Now start build and push docker image 🎉"
-        echo $GITHUB_TOKEN | docker login ghcr.io -u Xinrea --password-stdin
         docker build . --file Dockerfile --tag ghcr.io/Xinrea/xobs-scene-server:latest
         docker push ghcr.io/Xinrea/xobs-scene-server:latest
