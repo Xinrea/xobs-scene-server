@@ -170,6 +170,7 @@
     }
 </style>
 <script>
+    let ENDPOINT = "localhost:8080"
     let $time = document.getElementById("time")
     initialize();
     setInterval(() => {
@@ -191,7 +192,7 @@
           console.log(resp);
           document.getElementById("watched-numer").innerText = resp;
       }
-      oReq.open("GET", "http://localhost:8080/watched");
+      oReq.open("GET", "http://"+ENDPOINT+"/watched");
       oReq.send();
     }
     function updateFollower() {
@@ -202,7 +203,7 @@
           console.log(resp);
           document.getElementById("follower-numer").innerText = resp;
       }
-      oReq.open("GET", "http://localhost:8080/follower");
+      oReq.open("GET", "http://"+ENDPOINT+"/follower");
       oReq.send();
     }
     function initialize() {
@@ -223,7 +224,7 @@
               document.getElementById("medal-panel").appendChild(medal);
           }
       }
-      oReq.open("GET", "http://localhost:8080/config");
+      oReq.open("GET", "http://"+ENDPOINT+"/config");
       oReq.send();
     }
 </script>
