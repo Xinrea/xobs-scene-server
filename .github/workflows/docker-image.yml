@@ -1,0 +1,23 @@
+name: DockerImage Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup Go environment
+      uses: actions/setup-go@v3.0.0
+    - name: Go Build
+      run: go build -o xobs-scene-server main.go
+    - name: Build the Docker image
+      run: |
+        echo "Now start build and push docker image 🎉"
+        echo $GITHUB_TOKEN | docker login ghcr.io -u Xinrea --password-stdin
+        docker build . --file Dockerfile --tag ghcr.io/Xinrea/xobs-scene-server:latest
+        docker push ghcr.io/Xinrea/xobs-scene-server:latest
