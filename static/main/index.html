@@ -782,8 +782,8 @@
       var oReq = new XMLHttpRequest();
       oReq.responseType = "text";
       oReq.onload = function (e) {
-        var resp = oReq.responseText;
-        document.getElementById("watched-numer").innerText = resp;
+        var resp = JSON.parse(oReq.responseText)
+        document.getElementById("watched-numer").innerText = resp.watched_show.num;
         document.getElementById("live-title").innerText = resp.title;
       };
       oReq.open("GET", "http://" + ENDPOINT + "/roominfo");
@@ -793,8 +793,7 @@
       var oReq = new XMLHttpRequest();
       oReq.responseType = "text";
       oReq.onload = function (e) {
-        var resp = JSON.parse(oReq.responseText)
-        document.getElementById("follower-numer").innerText = resp.watched_show.num;
+        document.getElementById("follower-numer").innerText = resp;
       };
       oReq.open("GET", "http://" + ENDPOINT + "/follower");
       oReq.send();
