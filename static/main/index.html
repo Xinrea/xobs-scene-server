@@ -793,7 +793,7 @@
       var oReq = new XMLHttpRequest();
       oReq.responseType = "text";
       oReq.onload = function (e) {
-        document.getElementById("follower-numer").innerText = resp;
+        document.getElementById("follower-numer").innerText = oReq.responseText;
       };
       oReq.open("GET", "http://" + ENDPOINT + "/follower");
       oReq.send();
