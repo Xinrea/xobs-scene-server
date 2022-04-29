@@ -13,7 +13,7 @@ func main() {
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/", fs)
 	http.HandleFunc("/follower", requestForFollower)
-	http.HandleFunc("/watched", getWached)
+	http.HandleFunc("/roominfo", getRoomInfo)
 	http.HandleFunc("/config", getconfig)
 	http.ListenAndServe(":8080", nil)
 }
@@ -62,7 +62,7 @@ type Response struct {
 	} `json:"data"`
 }
 
-func getWached(w http.ResponseWriter, req *http.Request) {
+func getRoomInfo(w http.ResponseWriter, req *http.Request) {
 	req, err := http.NewRequest("GET", "https://api.bilibili.com/x/space/acc/info?mid=475210&jsonp=jsonp", nil)
 	if err != nil {
 		// handle err
@@ -96,7 +96,12 @@ func getWached(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Fprintf(w, "%d", marshalled.Data.LiveRoom.WatchedShow.Num)
+	marshalledJson, err := json.Marshal(&marshalled.Data.LiveRoom)
+	if err != nil {
+		log.Print(err)
+		return
+	}
+	fmt.Fprintf(w, "%s", marshalledJson)
 }
 
 type UserInfoResponse struct {

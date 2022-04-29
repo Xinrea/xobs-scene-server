@@ -775,25 +775,26 @@
       updateNumber();
     }, 10000);
     function updateNumber() {
-      updateWatched();
+      updateRoomInfo();
       updateFollower();
     }
-    function updateWatched() {
+    function updateRoomInfo() {
       var oReq = new XMLHttpRequest();
       oReq.responseType = "text";
       oReq.onload = function (e) {
         var resp = oReq.responseText;
         document.getElementById("watched-numer").innerText = resp;
+        document.getElementById("live-title").innerText = resp.title;
       };
-      oReq.open("GET", "http://" + ENDPOINT + "/watched");
+      oReq.open("GET", "http://" + ENDPOINT + "/roominfo");
       oReq.send();
     }
     function updateFollower() {
       var oReq = new XMLHttpRequest();
       oReq.responseType = "text";
       oReq.onload = function (e) {
-        var resp = oReq.responseText;
-        document.getElementById("follower-numer").innerText = resp;
+        var resp = JSON.parse(oReq.responseText)
+        document.getElementById("follower-numer").innerText = resp.watched_show.num;
       };
       oReq.open("GET", "http://" + ENDPOINT + "/follower");
       oReq.send();
@@ -804,7 +805,6 @@
       oReq.onload = function (e) {
         var resp = JSON.parse(oReq.responseText);
         console.log(resp);
-        document.getElementById("live-title").innerText = resp.title;
         document.getElementById("username").innerText = resp.id;
         document.getElementById("userid").innerText = resp.user;
         document.getElementById("mail").innerText = resp.mail;
