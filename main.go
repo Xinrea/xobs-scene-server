@@ -15,7 +15,7 @@ func main() {
 	http.HandleFunc("/follower", requestForFollower)
 	http.HandleFunc("/roominfo", getRoomInfo)
 	http.HandleFunc("/config", getconfig)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8081", nil)
 }
 
 func requestForFollower(w http.ResponseWriter, req *http.Request) {
